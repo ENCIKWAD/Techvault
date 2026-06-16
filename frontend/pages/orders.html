@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - TechVault</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .customer-order-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border-left: 4px solid #3498db;
+        }
+        .order-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .order-items {
+            margin: 15px 0;
+        }
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .order-item:last-child {
+            border-bottom: none;
+        }
+        .item-name {
+            flex: 1;
+        }
+        .item-price {
+            text-align: right;
+            min-width: 80px;
+        }
+        .payment-status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+        .status-paid {
+            background: #d5f4e6;
+            color: #27ae60;
+        }
+        .status-pending {
+            background: #fef5e7;
+            color: #f39c12;
+        }
+        .order-total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            color: #27ae60;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1><a href="index.html" style="text-decoration: none; color: inherit;">TechVault</a></h1>
+            <ul id="nav-links"></ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <!-- CUSTOMER VIEW -->
+        <div id="customer-view" style="display: none;">
+            <h2>My Orders</h2>
+            <div id="customer-orders"></div>
+        </div>
+
+        <!-- ADMIN VIEW -->
+        <div id="admin-view" style="display: none;">
+            <h2>Order Management</h2>
+            <div id="admin-orders"></div>
+        </div>
+
+        <!-- NOT LOGGED IN -->
+        <div id="not-logged-in" style="display: none;">
+            <p style="text-align: center; padding: 40px;">Please <a href="login.html">login</a> to view orders.</p>
+        </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/orders.js"></script>
+</body>
+</html>

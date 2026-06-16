@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - TechVault</title>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .admin-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ecf0f1;
+        }
+        .admin-tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: #7f8c8d;
+            transition: all 0.3s;
+        }
+        .admin-tab-btn.active {
+            color: #3498db;
+            border-bottom-color: #3498db;
+        }
+        .admin-tab {
+            display: none;
+        }
+        .admin-tab.active {
+            display: block;
+        }
+        .product-table, .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .product-table th, .orders-table th {
+            background: #34495e;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .product-table td, .orders-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        .product-table tr:hover, .orders-table tr:hover {
+            background: #f9f9f9;
+        }
+        .edit-btn, .delete-btn, .save-btn, .cancel-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin-right: 5px;
+            transition: all 0.3s;
+        }
+        .edit-btn {
+            background: #3498db;
+            color: white;
+        }
+        .edit-btn:hover {
+            background: #2980b9;
+        }
+        .delete-btn {
+            background: #e74c3c;
+            color: white;
+        }
+        .delete-btn:hover {
+            background: #c0392b;
+        }
+        .save-btn {
+            background: #27ae60;
+            color: white;
+        }
+        .save-btn:hover {
+            background: #229954;
+        }
+        .cancel-btn {
+            background: #95a5a6;
+            color: white;
+        }
+        .input-cell {
+            padding: 5px;
+        }
+        .input-cell input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #bdc3c7;
+            border-radius: 3px;
+        }
+        .orders-section {
+            margin-top: 30px;
+        }
+        .order-status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .status-pending { background: #f39c12; color: white; }
+        .status-paid { background: #3498db; color: white; }
+        .status-shipped { background: #9b59b6; color: white; }
+        .status-received { background: #27ae60; color: white; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <h1><a href="index.html" style="text-decoration: none; color: inherit;">TechVault</a></h1>
+            <ul id="nav-links"></ul>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h2>Admin Dashboard</h2>
+
+        <!-- TAB NAVIGATION -->
+        <div class="admin-tabs">
+            <button class="admin-tab-btn active" onclick="switchTab('products')">Product Management</button>
+            <button class="admin-tab-btn" onclick="switchTab('orders')">Order Management</button>
+        </div>
+
+        <!-- PRODUCTS TAB -->
+        <div id="products" class="admin-tab active">
+            <h3>Manage Products</h3>
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="products-table-body">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ORDERS TAB -->
+        <div id="orders" class="admin-tab">
+            <h3>Pending Orders</h3>
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order #</th>
+                        <th>Customer ID</th>
+                        <th>Amount</th>
+                        <th>Payment Method</th>
+                        <th>Status</th>
+                        <th>Approve Payment</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                </tbody>
+            </table>
+
+            <div class="orders-section">
+                <h3>Completed Orders</h3>
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Order #</th>
+                            <th>Customer ID</th>
+                            <th>Amount</th>
+                            <th>Payment Method</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="completed-orders-body">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="../js/api.js"></script>
+    <script src="../js/nav.js"></script>
+    <script src="../js/admin.js"></script>
+</body>
+</html>
