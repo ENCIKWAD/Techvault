@@ -1,3 +1,37 @@
+/*
+🎯 CART.JS - STRATEGY PATTERN (FRONTEND)
+==========================================
+This file handles shopping cart and checkout functionality.
+
+Pattern Demonstrated: STRATEGY Pattern
+Purpose: User selects payment method at checkout
+         Frontend triggers backend to use appropriate payment strategy
+
+Key Functions:
+- loadCart(): Display cart items and total
+- removeItem(): Remove product from cart
+- checkout(): Execute payment with selected strategy
+
+Design Pattern Flow:
+1. User selects payment method (radio button):
+   - Card: triggers CreditCardPayment strategy
+   - COD: triggers CashOnDeliveryPayment strategy
+
+2. Frontend sends payment method to backend
+
+3. Backend uses STRATEGY pattern to execute:
+   - CreditCardPayment.process_payment()
+   - CashOnDeliveryPayment.process_payment()
+
+Related Backend Files:
+- backend/app/routes/order.py: Receives payment method, uses strategy
+- backend/app/services/payment_strategy.py: Strategy implementations
+
+Related Files:
+- frontend/pages/cart.html: Cart UI with payment method radio buttons
+- frontend/js/catalog.js: Adds products to this cart
+*/
+
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('userId');
     const userRole = localStorage.getItem('userRole');

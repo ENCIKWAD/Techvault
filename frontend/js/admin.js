@@ -1,3 +1,50 @@
+/*
+🎯 ADMIN.JS - FACADE & FACTORY PATTERNS (FRONTEND)
+===================================================
+This file handles admin dashboard and operations.
+
+Patterns Demonstrated:
+
+1. FACADE Pattern:
+   - AdminService backend provides simplified API
+   - Complex operations (get stats, update inventory) are hidden
+   - Frontend calls simple methods without knowing implementation
+
+2. FACTORY Pattern:
+   - Admin dashboard is role-specific (created for 'admin' role users)
+   - Dashboard shows: Product Management + Order Management tabs
+   - Different UI from customer dashboard
+
+Key Functions:
+- loadProducts(): Load all products for management
+- loadOrders(): Load all orders for approval
+- startEditProduct(): Begin editing a product
+- saveProduct(): Save product changes
+- deleteProduct(): Remove product from inventory
+- approvePayment(): Admin approves COD payment (triggers STATE transition)
+
+Tab Interface:
+- Products tab: View, edit, delete products
+- Orders tab: View pending orders, approve payments
+
+Role-Based Access:
+- Only accessible to users with role='admin'
+- Factory pattern determines this is admin dashboard (not customer)
+- Different UI and functionality from customer pages
+
+Related Backend Files:
+- backend/app/services/admin_service.py: FACADE pattern (simplified API)
+- backend/app/services/dashboard_factory.py: FACTORY pattern (creates admin dashboard)
+- backend/app/routes/catalog.py: Product API endpoints
+- backend/app/routes/order.py: Order API endpoints
+- backend/app/data_access/product_repository.py: Product operations
+- backend/app/data_access/order_repository.py: Order operations
+
+Related Files:
+- frontend/pages/admin.html: Admin dashboard HTML
+- frontend/js/nav.js: Determines role and directs to admin page
+*/
+
 let editingProductId = null;
 let editingProductData = {};
 

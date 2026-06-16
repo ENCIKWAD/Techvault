@@ -1,3 +1,29 @@
+"""
+🎯 STRATEGY PATTERN IMPLEMENTATION
+===================================
+This file demonstrates the STRATEGY design pattern for payment processing.
+
+Pattern: Behavioral Design Pattern
+Purpose: Define a family of payment algorithms (Credit Card, Cash on Delivery)
+         and make them interchangeable.
+
+Key Classes:
+- PaymentStrategy: Abstract strategy interface
+- CreditCardPayment: Concrete strategy for card payments
+- CashOnDeliveryPayment: Concrete strategy for COD payments
+- PaymentProcessor: Context that uses the strategy
+
+Related Files:
+- backend/app/routes/order.py: Uses PaymentProcessor to execute payment
+- frontend/js/cart.js: Selects payment method (triggers strategy selection)
+
+Usage Flow:
+1. User selects payment method at checkout
+2. Appropriate strategy is instantiated (CreditCardPayment or CashOnDeliveryPayment)
+3. PaymentProcessor executes the selected strategy
+4. Different payment logic runs without modifying existing code
+"""
+
 from abc import ABC, abstractmethod
 
 class PaymentStrategy(ABC):

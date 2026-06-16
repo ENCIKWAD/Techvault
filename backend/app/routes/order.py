@@ -1,3 +1,30 @@
+"""
+🎯 ORDER ROUTES - MULTIPLE DESIGN PATTERNS
+============================================
+This file implements order endpoints that demonstrate multiple design patterns:
+
+Patterns Used:
+1. STRATEGY Pattern - Payment processing
+   - Different payment strategies (Card vs COD) selected at runtime
+
+2. STATE Pattern - Order lifecycle
+   - Order status transitions (pending → paid → shipped → received)
+
+3. OBSERVER Pattern - Notifications
+   - Status changes trigger notifications to all observers
+
+File Responsibility:
+- Handle checkout API requests
+- Create orders with selected payment strategy
+- Update order status and notify observers
+- Persist orders in database
+
+Related Pattern Files:
+- payment_strategy.py: STRATEGY pattern implementation
+- order_state.py: STATE pattern implementation
+- notification.py: OBSERVER pattern implementation
+"""
+
 from flask import Blueprint, request, jsonify
 from ..services.cart_service import CartService
 from ..data_access.order_repository import OrderRepository
@@ -6,10 +33,10 @@ from ..services.notification import OrderNotificationManager, EmailNotifier, SMS
 
 order_bp = Blueprint('order', __name__, url_prefix='/api/order')
 
-# Initialize notification system
+# Initialize notification system (OBSERVER pattern setup)
 notification_manager = OrderNotificationManager()
-notification_manager.attach(EmailNotifier())
-notification_manager.attach(SMSNotifier())
+notification_manager.attach(EmailNotifier())      # Add email observer
+notification_manager.attach(SMSNotifier())        # Add SMS observer
 
 @order_bp.route('/checkout', methods=['POST'])
 def checkout():

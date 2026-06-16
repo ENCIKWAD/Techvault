@@ -1,3 +1,43 @@
+/*
+🎯 ORDERS.JS - STATE & OBSERVER PATTERNS (FRONTEND)
+====================================================
+This file displays orders with state management and notifications.
+
+Patterns Demonstrated:
+
+1. STATE Pattern:
+   - Orders transition through states: pending → paid → shipped → received
+   - Each state displays different UI (buttons, messages)
+   - Customer can mark as received when in "shipped" state
+
+2. OBSERVER Pattern:
+   - Status changes trigger notifications
+   - When admin approves payment, customer sees update
+   - When order ships, customer sees status change
+
+Key Functions:
+- loadCustomerOrders(): Load and display customer's orders
+- loadAdminOrders(): Load and display all orders for admin
+- approveOrderPayment(): Admin approves payment (triggers STATE transition)
+- markItemReceived(): Customer confirms receipt
+
+State Display Logic:
+- Pending: Shows awaiting payment message
+- Paid: Shows order confirmed
+- Shipped: Shows shipping info + "Item Received" button
+- Received: Shows completion message
+
+Related Backend Files:
+- backend/app/routes/order.py: Handles status updates (STATE pattern)
+- backend/app/services/order_state.py: STATE pattern implementation
+- backend/app/services/notification.py: OBSERVER pattern (notifies when status changes)
+- backend/app/data_access/order_repository.py: Persists order state in database
+
+Related Files:
+- frontend/pages/orders.html: Orders UI with customer and admin views
+- frontend/js/admin.js: Also displays orders for admin dashboard
+*/
+
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('userId');
     const userRole = localStorage.getItem('userRole');
