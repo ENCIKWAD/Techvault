@@ -25,7 +25,25 @@ def get_products_by_category(category_id):
     products = CatalogService.get_products_by_category(category_id)
     return jsonify([dict(p) for p in products])
 
-# Admin endpoints - Update/Delete products
+# Admin endpoints - Create/Update/Delete products
+@catalog_bp.route('/products', methods=['POST'])
+def create_product():
+    data = request.json
+    name = data.get('name')
+    description = data.get('description')
+    price = data.get('price')
+    category_id = data.get('category_id')
+    stock = data.get('stock')
+
+    if not all([name, description, price is not None, category_id, stock is not None]):
+        return jsonify({'error': 'Missing required fields'}), 400
+
+    product_id = CatalogService.create_product(name, description, price, category_id, stock)
+    if product_id:
+        product = CatalogService.get_product(product_id)
+        return jsonify({'success': True, 'product': dict(product)}), 201
+    return jsonify({'error': 'Failed to create product'}), 400
+
 @catalog_bp.route('/products/<int:product_id>', methods=['PUT'])
 def update_product(product_id):
     data = request.json

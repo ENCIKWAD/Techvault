@@ -66,6 +66,23 @@ class ProductRepository:
             conn.close()
 
     @staticmethod
+    def create_product(name, description, price, category_id, stock):
+        conn = get_db()
+        cursor = conn.cursor()
+        try:
+            cursor.execute(
+                'INSERT INTO product (name, description, price, category_id, stock) VALUES (?, ?, ?, ?, ?)',
+                (name, description, price, category_id, stock)
+            )
+            conn.commit()
+            product_id = cursor.lastrowid
+            conn.close()
+            return product_id
+        except:
+            conn.close()
+            return None
+
+    @staticmethod
     def delete_product(product_id):
         conn = get_db()
         cursor = conn.cursor()

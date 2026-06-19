@@ -24,3 +24,7 @@ class CatalogService:
     @staticmethod
     def delete_product(product_id):
         return ProductRepository.delete_product(product_id)
+
+    @staticmethod
+    def create_product(name, description, price, category_id, stock):
+        return ProductRepository.create_product(name, description, price, category_id, stock)

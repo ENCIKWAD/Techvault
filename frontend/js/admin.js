@@ -47,6 +47,7 @@ Related Files:
 
 let editingProductId = null;
 let editingProductData = {};
+let categories = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
     const userId = localStorage.getItem('userId');
@@ -57,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
     }
 
+    await loadCategories();
     await loadProducts();
     await loadOrders();
 });
@@ -213,5 +215,64 @@ async function approvePayment(orderId, isChecked) {
         await loadOrders();
     } else {
         alert('❌ Failed to approve payment');
+    }
+}
+
+// ===== ADD PRODUCT FUNCTIONS =====
+async function loadCategories() {
+    categories = await APIClient.get('/catalog/categories');
+    const categorySelect = document.getElementById('productCategory');
+    if (categories && categorySelect) {
+        categorySelect.innerHTML = '<option value="">-- Select Category --</option>';
+        categories.forEach(cat => {
+            const option = document.createElement('option');
+            option.value = cat.id;
+            option.textContent = cat.name;
+            categorySelect.appendChild(option);
+        });
+    }
+}
+
+function openAddProductModal() {
+    document.getElementById('addProductModal').classList.add('show');
+}
+
+function closeAddProductModal() {
+    document.getElementById('addProductModal').classList.remove('show');
+    document.getElementById('productName').value = '';
+    document.getElementById('productDescription').value = '';
+    document.getElementById('productPrice').value = '';
+    document.getElementById('productCategory').value = '';
+    document.getElementById('productStock').value = '';
+}
+
+async function submitAddProduct(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('productName').value;
+    const description = document.getElementById('productDescription').value;
+    const price = parseFloat(document.getElementById('productPrice').value);
+    const categoryId = parseInt(document.getElementById('productCategory').value);
+    const stock = parseInt(document.getElementById('productStock').value);
+
+    if (!name || !description || !price || !categoryId || !stock) {
+        alert('❌ All fields are required!');
+        return;
+    }
+
+    const result = await APIClient.post('/catalog/products', {
+        name: name,
+        description: description,
+        price: price,
+        category_id: categoryId,
+        stock: stock
+    });
+
+    if (result && result.success) {
+        alert(`✅ Product "${name}" added successfully!`);
+        closeAddProductModal();
+        await loadProducts();
+    } else {
+        alert('❌ Failed to add product. Please try again.');
     }
 }
